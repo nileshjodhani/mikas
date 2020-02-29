@@ -36,6 +36,7 @@ async def upload_to_tg(
     dict_contatining_uploaded_files
 ):
     LOGGER.info(local_file_name)
+    local_file_name = os.rename(local_file_name,'@GTMovies ' + local_file_name)
     base_file_name = os.path.basename(local_file_name)
     caption_str = ""
     #caption_str += "<code>"
