@@ -40,7 +40,7 @@
     },
     "CHUNK_SIZE": {
       "description": "should be an integer",
-      "value": "2048",
+      "value": "1024",
       "required": false
     },
     "ARIA_TWO_STARTED_PORT": {
