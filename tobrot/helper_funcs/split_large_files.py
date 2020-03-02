@@ -19,10 +19,10 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 
 # the secret configuration specific things
-if bool(os.environ.get("WEBHOOK", False)):
-    from sample_config import Config
-else:
-    from config import Config
+#if bool(os.environ.get("WEBHOOK", False)):
+   # from sample_config import Config
+#else:
+    #from config import Config
 
 
 async def split_large_files(input_file):
