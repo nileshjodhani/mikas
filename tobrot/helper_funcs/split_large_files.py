@@ -18,9 +18,11 @@ import time
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 
-from tobrot import (
-    MAX_TG_SPLIT_FILE_SIZE
-)
+# the secret configuration specific things
+if bool(os.environ.get("WEBHOOK", False)):
+    from sample_config import Config
+else:
+    from config import Config
 
 
 async def split_large_files(input_file):
@@ -43,7 +45,7 @@ async def split_large_files(input_file):
         LOGGER.info(total_duration)
         total_file_size = os.path.getsize(input_file)
         LOGGER.info(total_file_size)
-        minimum_duration = (total_duration / total_file_size) * (MAX_TG_SPLIT_FILE_SIZE)
+        minimum_duration = (total_duration / total_file_size) * (Config.MAX_TG_SPLIT_FILE_SIZE)
         LOGGER.info(minimum_duration)
         # END: proprietary
         start_time = 0
@@ -54,13 +56,7 @@ async def split_large_files(input_file):
         i = 0
         while end_time < total_duration:
             LOGGER.info(i)
-            parted_file_name = ""
-            parted_file_name += str(i).zfill(5)
-            parted_file_name += str(base_name)
-            parted_file_name += "_PART_"
-            parted_file_name += str(start_time)
-            parted_file_name += "."
-            parted_file_name += str(input_extension)
+            parted_file_name = "" + str(i) + str(base_name) + "_PART_" + str(start_time) + "." + str(input_extension)
             output_file = os.path.join(new_working_directory, parted_file_name)
             LOGGER.info(output_file)
             LOGGER.info(await cult_small_video(
@@ -81,9 +77,9 @@ async def split_large_files(input_file):
         o_d_t = o_d_t + "."
         file_genertor_command = [
             "split",
-            "--numeric-suffixes=1",
+            "-d",
             "--suffix-length=5",
-            f"--bytes={MAX_TG_SPLIT_FILE_SIZE}",
+            "--bytes=1572863000",
             input_file,
             o_d_t
         ]
